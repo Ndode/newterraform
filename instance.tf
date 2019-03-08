@@ -1,9 +1,16 @@
 resource "aws_instance" "example" {
-   ami = "ami-0838da7c1467f590c"
-   instance_type = "t2.micro"
-   key_name = "terraform-key"
+   ami = "${var.ami}"
+   instance_type = "${var.instance_type}"
+   key_name = "${var.key-name}"
+   subnet_id = "${aws_subnet.dev1.id}"
    associate_public_ip_address = "true"
-   count = 1
+   count = "${var.count}"
 
+
+
+   tags {
+    Environment = "${var.environment}${count.index +1}"
+    Created_by = "${var.Created_by}"
+  }
 }
 
